@@ -8,7 +8,7 @@ import React, {
     TouchEventHandler
 } from 'react'
 import pointerCoord from '@/util/pointerCoord'
-import classNames from 'classNames'
+import classNames from 'classnames'
 
 interface IconTypes {
     checked: ReactNode,
