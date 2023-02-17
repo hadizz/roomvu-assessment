@@ -1,4 +1,4 @@
-import '@/styles/globals.css'
+import '@/styles/index.sass'
 import type {AppProps} from 'next/app'
 import MainLayout from "@/components/layout/MainLayout/MainLayout";
 import {NextComponentType, NextPageContext} from "next/dist/shared/lib/utils";

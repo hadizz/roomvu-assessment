@@ -5,11 +5,11 @@ import {ReactChildren} from "@/types";
 
 const MainLayout: React.FC<ReactChildren> = ({children}) => {
     return (
-        <div>
+        <>
             <Header/>
             {children}
             <Footer/>
-        </div>
+        </>
     );
 };
 
