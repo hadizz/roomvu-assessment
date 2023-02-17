@@ -5,6 +5,7 @@ import {GetPostServiceResponse, Post} from "@/types/Models/post";
 import cache from "@/libs/cache";
 import {CACHE_KEY_POSTS} from "@/constants/cache";
 import axios from "axios";
+import Bio from "@/components/Bio/Bio";
 
 export default function Home({posts, cached}: { cached: boolean; posts: GetPostServiceResponse }) {
     // const {
@@ -22,6 +23,7 @@ export default function Home({posts, cached}: { cached: boolean; posts: GetPostS
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
+            <Bio/>
             <br/>
             <h1 style={{color: cached ? 'green' : 'red'}}>{cached ? 'cached' : 'no cached'}</h1>
             <br/>
