@@ -2,26 +2,37 @@
 @import "../mixins/media-query"
 
 html
+  --bg: white
+  --textNormal: #{$colorGray}
+  --textLink: #{$colorPinkLight}
+
+html[data-theme="dark"]
+  --bg: #{$colorDarkBlue}
+  --textNormal: white
+  --textLink: #{$colorPinkDark}
+
+html
   direction: $directionBase
   font-family: $fontFamilyBase, sans-serif
   font-weight: $weightRegular
   font-size: $baseFontSize
-  color: $colorGray
   overflow-x: hidden
 
 body
-  background: $colorWhite
   //noinspection CssInvalidPropertyValue
   min-height: -webkit-fill-available
   margin-right: auto
   margin-left: auto
   max-width: 45rem
   padding: $spaceLargest $spaceLarge
+
+  // white mode
+  background: var(--bg)
+  color: var(--textNormal)
+
   +breakpoint(mobileTablet)
     height: 100vh
     overflow-y: auto
     transition: $transitionBase
     min-height: 100vh
     overflow-x: hidden
-
-
