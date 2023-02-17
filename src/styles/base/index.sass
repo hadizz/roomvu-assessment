@@ -4,11 +4,13 @@
 html
   --bg: white
   --textNormal: #{$colorGray}
+  --textHeading: #{$colorGray}
   --textLink: #{$colorPinkDark}
 
 html[data-theme="dark"]
   --bg: #{$colorDarkBlue}
-  --textNormal: white
+  --textNormal: #{$colorGray-500}
+  --textHeading: white
   --textLink: #{$colorPinkLight}
 
 html
@@ -25,6 +27,7 @@ body
   margin-left: auto
   max-width: 45rem
   padding: $spaceLargest $spaceLarge
+  font-feature-settings: "kern", "liga", "clig", "calt"
 
   // white mode
   background: var(--bg)

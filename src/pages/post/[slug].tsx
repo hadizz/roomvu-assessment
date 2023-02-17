@@ -5,6 +5,7 @@ import {getPostsService} from "@/services/post";
 import {GetStaticPaths, GetStaticProps} from "next";
 import cache from "@/libs/cache";
 import {CACHE_KEY_POSTS} from "@/constants/cache";
+import Typography from "@/components/Typography/Typography";
 
 interface PostPageProps {
     postData?: Post;
@@ -30,9 +31,9 @@ const Post = ({postData, cached}: PostPageProps) => {
         <div>
             <h1 style={{color: cached ? 'green' : 'red'}}>{cached ? 'cached' : 'no cached'}</h1>
             {!postData ? 'no data to show' : <div>
-                <h1 className='text-extra-bold fontSizeLargest'>{postData.title}</h1>
-                <small className='fontFamilySecondary'>{postData.date}</small>
-                <div className='mt-32'>{postData.body}</div>
+                <Typography variant={'heading1'}>{postData.title}</Typography>
+                <Typography className='mt-8' variant='body1' fontFamily='secondary'>{postData.date}</Typography>
+                <Typography className='mt-16' variant='body1' fontFamily='secondary'>{postData.body}</Typography>
             </div>}
         </div>
     );
