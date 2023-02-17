@@ -1,8 +1,7 @@
 import React from 'react';
 import PostLayout from "@/components/layout/PostLayout/PostLayout";
-import axios from 'axios'
 import {Post} from "@/types";
-import postUrls from "@/services/post/urls";
+import {getPostsService} from "@/services/post";
 import {GetStaticPaths, GetStaticProps} from "next";
 import cache from "@/libs/cache";
 import {CACHE_KEY_POSTS} from "@/constants/cache";
@@ -49,14 +48,11 @@ export const getStaticProps: GetStaticProps<PostPageProps, { slug: string }, any
             revalidate: 60 * 60
         }
     }
-    // fetch the data from your data source
-    const posts = await axios.get<Post[]>(postUrls.getPosts)
-
-    // store the data in the cache
-    cache.set(CACHE_KEY_POSTS, posts.data);
+    const posts = await getPostsService()
+    cache.set(CACHE_KEY_POSTS, posts);
 
     return {
-        props: {cached: false, postData: posts.data.find(p => p.id.toString() === params?.slug)},
+        props: {cached: false, postData: posts.find(p => p.id.toString() === params?.slug)},
         revalidate: 60 * 60
     }
 }

@@ -2,7 +2,8 @@ export interface Post {
     body: string,
     id: number,
     title: string,
-    userId: number
+    userId: number,
+    date: string;
 }
 
-export type GetPostServiceResponse = Post[]
+export type GetPostServiceResponse = Omit<Post, 'date'>[]

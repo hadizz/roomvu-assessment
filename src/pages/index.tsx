@@ -1,13 +1,13 @@
 import Head from 'next/head'
-import postUrls from "@/services/post/urls";
-import Link from "next/link";
-import {GetPostServiceResponse, Post} from "@/types/Models/post";
+import {getPostsService} from "@/services/post";
+import {Post} from "@/types/Models/post";
 import cache from "@/libs/cache";
 import {CACHE_KEY_POSTS} from "@/constants/cache";
-import axios from "axios";
 import Bio from "@/components/Bio/Bio";
+import PostPreview from "@/components/PostPreview/PostPreview";
+import {GetStaticProps} from "next";
 
-export default function Home({posts, cached}: { cached: boolean; posts: GetPostServiceResponse }) {
+export default function Home({posts, cached}: { cached: boolean; posts: Post[] }) {
     // const {
     //     data,
     //     error,
@@ -27,30 +27,31 @@ export default function Home({posts, cached}: { cached: boolean; posts: GetPostS
             <br/>
             <h1 style={{color: cached ? 'green' : 'red'}}>{cached ? 'cached' : 'no cached'}</h1>
             <br/>
-            <div>
+            <main>
                 {
                     !!posts && !!posts.length && posts.map(post =>
-                        (<div key={post.id}>
-                            <Link href={'/post/' + post.id}><h4>{post.title}</h4></Link>
-                            <div>{new Date(post.id).toString()}</div>
-                        </div>))
+                        (<PostPreview {...post} key={post.id}/>))
                 }
-            </div>
+            </main>
         </>
     )
+}
+
+
+interface MainPageGetStaticProps {
+    posts: Post[];
+    cached: boolean;
 }
 
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // revalidation is enabled and a new request comes in
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps<MainPageGetStaticProps> = async () => {
     const cachedData = cache.get(CACHE_KEY_POSTS);
     if (cachedData) {
-        return {props: {cached: true, posts: cachedData}};
+        return {props: {cached: true, posts: cachedData as Post[]}};
     }
-    const res = await axios.get<Post[]>(postUrls.getPosts)
-    const posts = res.data;
-
+    const posts = await getPostsService()
     cache.set(CACHE_KEY_POSTS, posts)
 
     return {
