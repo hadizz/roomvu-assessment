@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from "next/link";
-import Switch from "@/pages/components/Inputs/Switch/Switch";
+import Switch from "@/components/Inputs/Switch/Switch";
 
 interface HeaderProps {
     theme?: 'post' | 'default'

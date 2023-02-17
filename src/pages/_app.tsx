@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 import type {AppProps} from 'next/app'
-import MainLayout from "@/pages/layout/MainLayout/MainLayout";
+import MainLayout from "@/components/layout/MainLayout/MainLayout";
 import {NextComponentType, NextPageContext} from "next/dist/shared/lib/utils";
 import React from "react";
 import {ReactChildren} from "@/types";
