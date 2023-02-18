@@ -43,7 +43,6 @@ export const getStaticProps: GetStaticProps<PostPageProps, { slug: string }, any
 }
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-    // const response = await axios.get<Post[]>(postUrls.getPosts)
     return {
         paths: Array.from({length: 100}).map((_, i) => ({
             params: {
