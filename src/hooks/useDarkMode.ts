@@ -1,6 +1,8 @@
-import {Dispatch, SetStateAction, useEffect, useLayoutEffect, useMemo, useState} from 'react';
+import {useEffect, useLayoutEffect} from 'react';
 import {addItemToStorage, getItemFromStorage} from "@/util/storage";
 import {DATA_THEME, THEME_DARK_KEY, THEME_LIGHT_KEY, THEME_STORAGE_KEY} from "@/constants/theme";
+import {selectAppConfig, setIsDarkMode} from "@/store/slices/appConfigSlice";
+import {useDispatch, useSelector} from 'react-redux'
 
 const changeTheme = (matchesDark: boolean) => {
     if (matchesDark) {
@@ -12,39 +14,41 @@ const changeTheme = (matchesDark: boolean) => {
     }
 };
 
-type DarkModeHookReturnArgs = [isDarkMode: boolean, setIsDarkMode: Dispatch<SetStateAction<boolean>>]
+type DarkModeHookReturnType = boolean
 
-const useDarkMode = (): DarkModeHookReturnArgs => {
-    const [isDarkMode, setIsDarkMode] = useState<Readonly<boolean>>(false);
+const useDarkMode = (): DarkModeHookReturnType => {
+    const dispatch = useDispatch();
+    // @ts-ignore
+    const {isDarkMode} = useSelector(selectAppConfig);
 
     // handles initializing theme of app
     useLayoutEffect(() => {
 
         const darkModeItem = getItemFromStorage(THEME_STORAGE_KEY)
         if (darkModeItem) {
-            setIsDarkMode(darkModeItem === THEME_DARK_KEY)
+            dispatch(setIsDarkMode(darkModeItem === THEME_DARK_KEY))
             changeTheme(darkModeItem === THEME_DARK_KEY)
         } else {
             const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
-            setIsDarkMode(matchMedia.matches)
+            dispatch(setIsDarkMode(matchMedia.matches))
 
             const handleOnChangeColorScheme = (event: MediaQueryListEvent) => {
                 let matchesDark = event.matches; // if true means it's dark 🌚
-                setIsDarkMode(matchesDark)
+                dispatch(setIsDarkMode(matchesDark))
                 changeTheme(matchesDark)
             }
 
             matchMedia.addEventListener('change', handleOnChangeColorScheme);
             return () => matchMedia.removeEventListener('change', handleOnChangeColorScheme)
         }
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         // listen for changing when click button or system preferences change
         changeTheme(isDarkMode)
     }, [isDarkMode])
 
-    return useMemo<DarkModeHookReturnArgs>(() => ([isDarkMode, setIsDarkMode]), [isDarkMode, setIsDarkMode]);
+    return isDarkMode;
 };
 
 export default useDarkMode;
