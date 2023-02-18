@@ -12,8 +12,8 @@ export default function Home({posts}: { posts: Post[] }) {
     return (
         <>
             <Head>
-                <title>Create Next App</title>
-                <meta name="description" content="blog using nextjs"/>
+                <title>Hadiz Blog</title>
+                <meta name="description" content="hadiz blog"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>

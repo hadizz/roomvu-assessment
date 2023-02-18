@@ -6,6 +6,7 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import cache from "@/libs/cache";
 import {CACHE_KEY_POSTS} from "@/constants/cache";
 import Typography from "@/components/Typography/Typography";
+import Head from "next/head";
 
 interface PostPageProps {
     postData?: Post;
@@ -13,13 +14,18 @@ interface PostPageProps {
 
 const Post = ({postData}: PostPageProps) => {
     return (
-        <div>
-            {!postData ? 'no data to show' : <div>
-                <Typography variant={'heading1'}>{postData.title}</Typography>
-                <Typography className='mt-8' variant='body1' fontFamily='secondary'>{postData.date}</Typography>
-                <Typography className='mt-16' variant='body1' fontFamily='secondary'>{postData.body}</Typography>
-            </div>}
-        </div>
+        <>
+            <Head>
+                <title>{postData?.title ?? 'Hadiz Blog Post'}</title>
+            </Head>
+            <div>
+                {!postData ? 'no data to show' : <div>
+                    <Typography variant={'heading1'}>{postData.title}</Typography>
+                    <Typography className='mt-8' variant='body1' fontFamily='secondary'>{postData.date}</Typography>
+                    <Typography className='mt-16' variant='body1' fontFamily='secondary'>{postData.body}</Typography>
+                </div>}
+            </div>
+        </>
     );
 };
 
