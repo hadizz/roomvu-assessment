@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import cx from "classnames"
 import {ReactChildren} from "@/types";
 
-interface TypographyProps extends Partial<Omit<HTMLElement, 'children'>>, ReactChildren {
+interface TypographyProps extends Partial<Omit<HTMLElement, 'children' | 'style'>>, ReactChildren {
     variant?: 'heading1' | 'heading3' | 'body1' | 'small';
     fontFamily?: 'default' | 'secondary';
     color?: string;
     size?: any;
     weight?: any;
+    style?: CSSProperties
 }
 
 const variants: {
