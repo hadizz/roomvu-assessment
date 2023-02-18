@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import {getPostsService} from "@/services/post";
 import {Post} from "@/types/Models/post";
 import cache from "@/libs/cache";
@@ -6,17 +5,14 @@ import {CACHE_KEY_POSTS} from "@/constants/cache";
 import Bio from "@/components/Bio/Bio";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import {GetStaticProps} from "next";
+import {PageSEO} from "@/components/SEO";
+import siteMetaData from "@/constants/siteMetaData";
 
 export default function Home({posts}: { posts: Post[] }) {
 
     return (
         <>
-            <Head>
-                <title>Hadiz Blog</title>
-                <meta name="description" content="hadiz blog"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
+            <PageSEO title={siteMetaData.title} description={siteMetaData.description}/>
             <Bio/>
             <main>
                 {

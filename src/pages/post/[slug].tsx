@@ -6,7 +6,8 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import cache from "@/libs/cache";
 import {CACHE_KEY_POSTS} from "@/constants/cache";
 import Typography from "@/components/Typography/Typography";
-import Head from "next/head";
+import {BlogSEO} from "@/components/SEO";
+import siteMetaData from "@/constants/siteMetaData";
 
 interface PostPageProps {
     postData?: Post;
@@ -15,9 +16,12 @@ interface PostPageProps {
 const Post = ({postData}: PostPageProps) => {
     return (
         <>
-            <Head>
-                <title>{postData?.title ?? 'Hadiz Blog Post'}</title>
-            </Head>
+            <BlogSEO
+                title={postData?.title || siteMetaData.title}
+                description={postData?.body.substring(20) || siteMetaData.description}
+                date={postData?.date || ''}
+                lastmod={postData?.date || ''}
+            />
             <div>
                 {!postData ? 'no data to show' : <div>
                     <Typography variant={'heading1'}>{postData.title}</Typography>

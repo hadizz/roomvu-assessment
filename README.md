@@ -6,7 +6,7 @@ this project is hosted with vercel. [see here](https://roomvu-assessment.vercel.
 
 preview:
 <div style="text-align: center; margin: 4px auto;">
-    <img src="./preview.png" width="80%" />
+    <img src="./public/preview.png" alt="preview" width="80%" />
 </div>
 
 Technologies used:
