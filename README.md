@@ -1,3 +1,20 @@
+# Roomvu Assessment
+
+Simple blog with the power of nextjs. case study is [Dan Abramov](https://overreacted.io/) blog.
+
+this project is hosted with vercel. [see here](https://roomvu-assessment.vercel.app)
+
+preview:
+<div style="text-align: center; margin: 4px auto;">
+    <img src="./preview.png" width="80%" />
+</div>
+
+Technologies used:
+- nextjs
+- typescript
+- sass
+- redux toolkit
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -15,12 +32,6 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/posts.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 
