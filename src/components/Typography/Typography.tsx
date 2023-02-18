@@ -8,7 +8,8 @@ interface TypographyProps extends Partial<Omit<HTMLElement, 'children' | 'style'
     color?: string;
     size?: any;
     weight?: any;
-    style?: CSSProperties
+    style?: CSSProperties;
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'div' | 'small';
 }
 
 const variants: {
@@ -56,9 +57,10 @@ const Typography: React.FC<TypographyProps> = ({
                                                    style,
                                                    size,
                                                    weight,
+                                                   tag = '',
                                                    ...props
                                                }) => {
-    const Tag = variants[variant].tag as any;
+    const Tag = tag || variants[variant].tag as any;
 
     return (
         <Tag className={cx(className, fontFamily === 'secondary' && 'fontFamilySecondary', color)}
