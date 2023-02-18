@@ -4,7 +4,7 @@ import {DATA_THEME, THEME_DARK_KEY, THEME_LIGHT_KEY, THEME_STORAGE_KEY} from "@/
 import {selectAppConfig, setIsDarkMode} from "@/store/slices/appConfigSlice";
 import {useDispatch, useSelector} from 'react-redux'
 
-const changeTheme = (matchesDark: boolean) => {
+export const changeTheme = (matchesDark: boolean) => {
     if (matchesDark) {
         addItemToStorage(THEME_STORAGE_KEY, THEME_DARK_KEY)
         document.documentElement.setAttribute(DATA_THEME, THEME_DARK_KEY);
@@ -23,29 +23,32 @@ const useDarkMode = (): DarkModeHookReturnType => {
 
     // handles initializing theme of app
     useLayoutEffect(() => {
-
         const darkModeItem = getItemFromStorage(THEME_STORAGE_KEY)
         if (darkModeItem) {
-            dispatch(setIsDarkMode(darkModeItem === THEME_DARK_KEY))
-            changeTheme(darkModeItem === THEME_DARK_KEY)
+            const newTheme = darkModeItem === THEME_DARK_KEY
+            if (isDarkMode !== newTheme) {
+                dispatch(setIsDarkMode(darkModeItem === THEME_DARK_KEY))
+            }
         } else {
             const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
-            dispatch(setIsDarkMode(matchMedia.matches))
-
-            const handleOnChangeColorScheme = (event: MediaQueryListEvent) => {
-                let matchesDark = event.matches; // if true means it's dark 🌚
-                dispatch(setIsDarkMode(matchesDark))
-                changeTheme(matchesDark)
+            if (isDarkMode !== matchMedia.matches) {
+                dispatch(setIsDarkMode(matchMedia.matches))
             }
-
-            matchMedia.addEventListener('change', handleOnChangeColorScheme);
-            return () => matchMedia.removeEventListener('change', handleOnChangeColorScheme)
         }
-    }, [dispatch])
+    }, [])
 
     useEffect(() => {
-        // listen for changing when click button or system preferences change
-        changeTheme(isDarkMode)
+        const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const handleOnChangeColorScheme = (event: MediaQueryListEvent) => {
+            let matchesDark = event.matches; // if true means it's dark 🌚
+            if (isDarkMode !== matchesDark) {
+                dispatch(setIsDarkMode(matchesDark))
+            }
+        }
+
+        matchMedia.addEventListener('change', handleOnChangeColorScheme);
+        return () => matchMedia.removeEventListener('change', handleOnChangeColorScheme)
     }, [isDarkMode])
 
     return isDarkMode;

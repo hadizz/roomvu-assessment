@@ -2,7 +2,7 @@ export const STORAGE_LOCAL = 'STORAGE_LOCAL';
 export const STORAGE_SESSION = 'STORAGE_SESSION';
 export const STORAGE_COOkIE = 'STORAGE_COOKIE';
 
-const canAccessLocalStorage = () => {
+export const canAccessLocalStorage = () => {
     try {
         return !!window.localStorage;
     } catch (e) {
