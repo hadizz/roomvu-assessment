@@ -7,13 +7,7 @@ import Bio from "@/components/Bio/Bio";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import {GetStaticProps} from "next";
 
-export default function Home({posts, cached}: { cached: boolean; posts: Post[] }) {
-    // const {
-    //     data,
-    //     error,
-    //     isLoading,
-    //     isValidating,
-    // } = useSWR<GetPostServiceResponse>(postUrls.getPosts, baseFetcher)
+export default function Home({posts}: { posts: Post[] }) {
 
     return (
         <>
@@ -24,9 +18,6 @@ export default function Home({posts, cached}: { cached: boolean; posts: Post[] }
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Bio/>
-            <br/>
-            <h1 style={{color: cached ? 'green' : 'red'}}>{cached ? 'cached' : 'no cached'}</h1>
-            <br/>
             <main>
                 {
                     !!posts && !!posts.length && posts.map(post =>
@@ -40,7 +31,6 @@ export default function Home({posts, cached}: { cached: boolean; posts: Post[] }
 
 interface MainPageGetStaticProps {
     posts: Post[];
-    cached: boolean;
 }
 
 // This function gets called at build time on server-side.
@@ -49,7 +39,7 @@ interface MainPageGetStaticProps {
 export const getStaticProps: GetStaticProps<MainPageGetStaticProps> = async () => {
     const cachedData = cache.get(CACHE_KEY_POSTS);
     if (cachedData) {
-        return {props: {cached: true, posts: cachedData as Post[]}};
+        return {props: {posts: cachedData as Post[]}};
     }
     const posts = await getPostsService()
     cache.set(CACHE_KEY_POSTS, posts)
@@ -57,7 +47,6 @@ export const getStaticProps: GetStaticProps<MainPageGetStaticProps> = async () =
     return {
         props: {
             posts,
-            cached: false
         },
         // Next.js will attempt to re-generate the page:
         // - When a request comes in

@@ -9,27 +9,11 @@ import Typography from "@/components/Typography/Typography";
 
 interface PostPageProps {
     postData?: Post;
-    cached: boolean;
 }
 
-const Post = ({postData, cached}: PostPageProps) => {
-    // const router = useRouter()
-    // const {slug} = router.query
-    // const [isLoading, setIsLoading] = useState<Readonly<boolean>>(true)
-    // const [postData, setPostData] = useState<Readonly<Post> | null>(null);
-    // const mounted = useMounted()
-    // useEffect(() => {
-    //     if (slug) {
-    //         axios.get('http://localhost:3000/api/post/' + slug).then(res => {
-    //             mounted && setPostData(res.data)
-    //         }).catch(console.error)
-    //             .finally(() => mounted && setIsLoading(false))
-    //     }
-    // }, [mounted, slug, setIsLoading])
-
+const Post = ({postData}: PostPageProps) => {
     return (
         <div>
-            <h1 style={{color: cached ? 'green' : 'red'}}>{cached ? 'cached' : 'no cached'}</h1>
             {!postData ? 'no data to show' : <div>
                 <Typography variant={'heading1'}>{postData.title}</Typography>
                 <Typography className='mt-8' variant='body1' fontFamily='secondary'>{postData.date}</Typography>
@@ -66,7 +50,7 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
                 slug: (i + 1).toString()
             },
         })),
-        fallback: false,
+        fallback: 'blocking',
     }
 }
 
